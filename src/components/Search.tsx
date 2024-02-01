@@ -58,7 +58,7 @@ export default function Search() {
       </select>
       <div className="form mt-4">
         {" "}
-        <form className="p-4" onSubmit={onSubmit}>
+        <form className="flex flex-col md:flex-row items-center p-4" onSubmit={onSubmit}>
           <label htmlFor="start">Start date</label>
           <input
             type="date"

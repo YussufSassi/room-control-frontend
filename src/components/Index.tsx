@@ -10,6 +10,7 @@ import { apiOptionsAtom } from "../atoms/requestOptions";
 import { useQuery } from "react-query";
 import Search from "./Search";
 import TrafficLights from "./TrafficLights";
+
 export default function Index() {
   const [apiOptions] = useAtom(apiOptionsAtom);
   const [sensorData, setSensorData] = useAtom(sensorDataAtom);
@@ -27,16 +28,10 @@ export default function Index() {
   }, [query.data, setSensorData]);
 
   const co2DataArray = sensorData.map((s) => s.co2).sort((a, b) => b - a);
-  const tempDataArray = sensorData
-    .map((s) => s.temperature)
-    .sort((a, b) => b - a);
-  const humidityDataArray = sensorData
-    .map((s) => s.humidity)
-    .sort((a, b) => b - a);
+  const tempDataArray = sensorData.map((s) => s.temperature).sort((a, b) => b - a);
+  const humidityDataArray = sensorData.map((s) => s.humidity).sort((a, b) => b - a);
   const dustDataArray = sensorData.map((s) => s.dust).sort((a, b) => b - a);
-  const pressureDataArray = sensorData
-    .map((s) => s.pressure)
-    .sort((a, b) => b - a);
+  const pressureDataArray = sensorData.map((s) => s.pressure).sort((a, b) => b - a);
 
   if (query.isLoading && !query.isError) {
     return (
@@ -57,7 +52,7 @@ export default function Index() {
   return (
     <div className="m-4">
       <div className="title flex justify-center">
-        <h1 className="inline-flex items-center text-5xl font-bold gap-4 pb-12">
+        <h1 className="inline-flex items-center text-5xl font-bold gap-4 pb-4 md:pb-12">
           Room control
           <MdDashboard size={"64px"} />
         </h1>
@@ -67,13 +62,13 @@ export default function Index() {
 
       <Search />
 
-      <div className="grid grid-cols-2 ">
-        <div className="container h-[2170px] overflow-y-auto w-max">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4">
+        <div className="container max-h-[80vh] overflow-y-auto w-full md:w-max">
           {sensorData.map((s) => (
             <SensorDataCard data={s} key={s.id}></SensorDataCard>
           ))}
         </div>
-        <div className="h-max">
+        <div className="w-full">
           <Histogram
             title="CO2"
             data={co2DataArray}
